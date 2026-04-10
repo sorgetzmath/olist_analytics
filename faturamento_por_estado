@@ -1,0 +1,12 @@
+-- Objetivo: analisar faturamento por estado
+-- Insight esperado: identificar regiões mais lucrativas
+select
+  c.customer_state as estado,
+  sum(i.price) as faturamento
+from customer_dataset as c
+join orders_dataset as o
+on c.customer_id = o.customer_id
+join order_items_dataset as i
+on o.order_id = i.order_id
+group by c.customer_state
+order by sum(i.price) desc
