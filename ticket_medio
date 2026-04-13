@@ -1,0 +1,23 @@
+-- Objetivo: calcular o ticket médio por cliente
+-- Insight esperado: qual o comportamento de compra de cada cliente?
+
+with customer_info as (
+  select
+    c.customer_unique_id as cliente,
+    sum(i.price) as faturamento,
+    count(o.order_id) as qtde_pedidos
+  from orders_dataset as o
+  join customer_dataset as c
+  on o.customer_id = c.customer_id
+  join order_items_dataset as i
+  on o.order_id = i.order_id
+  group by c.customer_unique_id)
+
+select
+  cliente,
+  faturamento,
+  qtde_pedidos,
+  faturamento/qtde_pedidos as ticket_medio
+from customer_info
+where qtde_pedidos >= 2
+order by ticket_medio desc
