@@ -1,0 +1,12 @@
+-- Objetivo: descobrir quais as 5 categorias de produtos mais vendidas
+-- Insight esperado: entender quais segmentos de mercado estão em alta
+
+select
+  p.product_category_name as categoria,
+  count(i.product_id) as qtde_vendida
+from products_dataset as p
+join order_items_dataset as i
+on p.product_id = i.product_id
+group by categoria
+order by qtde_vendida desc
+limit 5
