@@ -1,0 +1,12 @@
+-- Objetivo: descobrir quais as 5 categorias de produtos mais lucrativas
+-- Insight esperado: entender quais segmentos trarão mais retorno financeiro
+
+select
+  p.product_category_name as categoria,
+  sum(i.price) as faturamento
+from products_dataset as p
+join order_items_dataset as i
+on p.product_id = i.product_id
+group by categoria
+order by faturamento desc
+limit 5
